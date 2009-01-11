@@ -1,5 +1,4 @@
 vector = %w[a b c d e f g h i j]
-# vector rotation without using extra memory
 
 #helper
 def swap(vector,i,j)
@@ -10,7 +9,7 @@ end
 # intuitive solution
 # rotate by shifting one position, steps-times
 # O(n*steps)
-def rotate1(vector,steps)
+def rotate(vector,steps)
   steps.times {
     (vector.length-1).times {|i| swap(vector,i,i+1)}
   }
@@ -18,5 +17,5 @@ def rotate1(vector,steps)
 end
 
 vector.length.times {|i|
-  puts rotate1(vector.dup,i) * ', '
+  puts rotate(vector.dup,i) * ', '
 }
