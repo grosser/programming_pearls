@@ -9,9 +9,6 @@ input = open(assets('bible.txt'))
 # optimized: mapped: 109892K   writeable/private: 94420K   shared: 0K
 # optimized: the text (4.x mb) is in memory twice (once for IO.read and once for text.split, no garbage collection was run)
 
-#initialisation
-require 'benchmark'
-include Benchmark
 occurances = nil
 
 processing = measure do

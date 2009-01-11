@@ -1,11 +1,17 @@
+require File.join(File.dirname(__FILE__),'..','..','helpers','helper')
+input = open(assets('bible.txt'))
+text = input.read(1_000)
+
 # find the longest duplicate substring
-text = "Ask not what your country can do for you, but what you can do for your country"
-max = 0
-0.upto(text.length) {|start|
-  0.upto(text.length-start) {|offset|
-    substring = text[start..(start+offset)]
-    max = [max,substring.strip.length].max if text.scan(substring).length == 2
+# complexity = n*n/2
+longest = ''
+time = measure do
+  0.upto(text.length) {|start|
+    0.upto(text.length-start) {|offset|
+      substring = text[start..(start+offset)]
+      longest = substring if substring.length > longest.length and text.scan(substring).length == 2
+    }
   }
-}
-puts max 
-puts "'can do for you' --> 14"
+end
+puts time
+puts longest

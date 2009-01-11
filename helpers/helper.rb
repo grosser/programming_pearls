@@ -15,3 +15,16 @@ def memory
   map = `pmap -d #{pid}`
   map.split("\n").last
 end
+
+# return the common prefix of 2 strings
+# abaa, abacc ==> aba
+def common_prefix(a,b)
+  return '' if b.nil?
+  0.upto(a.length) {|i|
+    return (i == 0 ? "" : a[0..i-1]) if a[0..i] != b[0..i]
+  }
+  ''
+end
+
+require 'benchmark'
+include Benchmark

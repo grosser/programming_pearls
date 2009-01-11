@@ -2,10 +2,6 @@ require File.join(File.dirname(__FILE__),'..','..','helpers','helper')
 input = open(assets('bible.txt'))
 
 # benchmarking of occurance search to find possibble speed optimization
-
-#initialisation
-require 'benchmark'
-include Benchmark
 occurances = nil
 
 processing = measure do
