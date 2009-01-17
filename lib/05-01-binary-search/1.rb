@@ -6,7 +6,7 @@ def find(range,number)
   chosen = range[middle]
 
   return middle if chosen == number
-  return nil if range.length == 1
+  return nil if range.length <= 1
 
   if chosen < number
     #search in the upper range, add middle to resulting index
