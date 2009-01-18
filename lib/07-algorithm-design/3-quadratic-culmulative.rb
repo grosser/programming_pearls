@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__),'test')
 
-#runtime O(n³) 2 loops + the sum loop
+#runtime O(n²)
 def find_max_sum_range(range)
   # build sums, where sums[2] == range[0...2].sum
   # and range[1...3] = sums[1]-sums[3]
