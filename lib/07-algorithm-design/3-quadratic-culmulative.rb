@@ -6,7 +6,6 @@ def find_max_sum_range(range)
   # and range[1...3] = sums[1]-sums[3]
   sums=[]
   range.each{|x|sums << sums.last.to_i+x}
-  puts sums * "|"
 
   max = 0
   0.upto(range.length) do |start|
