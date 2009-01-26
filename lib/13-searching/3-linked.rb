@@ -11,6 +11,7 @@ class SetLinked
     raise "size too big" if size >= @maximum #would runs endless
     reset
     insert(rand(@maximum)) while @size < size
+    flatten
   end
 
   def reset
@@ -53,9 +54,7 @@ class SetLinked
   end
 end
 
-#thats 1/5th of the SetArray size
+#thats 1/200th of the SetHash size
 #using array instead of the more-readable hash[:next], only saves 1/100th of the time
-#going over 1_500 results in "stack level to deep" (non-recursive solution is longer/uglier...)
-s = SetLinked.new(500_000)
-s.generate(1_000)
-s.flatten*'-'
+#going over 1_200 results in "stack level to deep" (non-recursive solution is longer/uglier...)
+puts SetLinked.new(500_000).generate(1_150) * '-'

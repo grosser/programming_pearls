@@ -14,4 +14,4 @@ class SetHash
   end
 end
 
-puts SetHash.new(500_000).generate(100_000)*'-'
+puts SetHash.new(500_000).generate(200_000)*'-'

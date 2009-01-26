@@ -9,10 +9,10 @@ class SetArray
     @set = []
     while @set.size < size
       random = rand(@maximum)
-      @set << random unless @set.index(random)
+      @set << random unless @set.include?(random)
     end
     @set.sort
   end
 end
 
-puts SetArray.new(500_000).generate(10_000)*'-'#thats 1/10th of the SetHash size
+puts SetArray.new(500_000).generate(5_000)*'-'#thats 1/40th of the SetHash size
