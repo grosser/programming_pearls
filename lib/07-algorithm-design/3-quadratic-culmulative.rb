@@ -1,9 +1,7 @@
 require File.join(File.dirname(__FILE__),'test')
 
-#runtime O(n²)
+#----excerpt
 def find_max_sum_range(range)
-  # build sums, where sums[2] == range[0...2].sum
-  # and range[1...3] = sums[1]-sums[3]
   sums=[]
   range.each{|x|sums << sums.last.to_i+x}
 
@@ -17,5 +15,6 @@ def find_max_sum_range(range)
   end
   max
 end
+#----excerpt
 
 test

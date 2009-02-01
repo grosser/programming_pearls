@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__),'test')
 
-#runtime O(n log n) - divide problem into 2 smaller problems
+#----excerpt
 def find_max_sum_range(range)
   #trivial
   return 0 if range.empty?
@@ -27,5 +27,6 @@ def find_max_sum_range(range)
     find_max_sum_range(right)
   ].max
 end
+#----excerpt
 
 test

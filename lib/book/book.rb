@@ -8,6 +8,7 @@ class Book
 
   def to_html
 #    Maruku.new(chapters.map(&:to_markdown) * "\n").to_html_document
+    #TODO wrap in document + utf8 header
     RDiscount.new(chapters.map(&:to_markdown) * "\n").to_html
   end
 

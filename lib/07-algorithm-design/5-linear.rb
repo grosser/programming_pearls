@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__),'test')
 
-# runtime O(n)
+#----excerpt
 def find_max_sum_range(range)
   max = partial_max = 0
   range.each do |x|
@@ -10,5 +10,6 @@ def find_max_sum_range(range)
   end
   max
 end
+#----excerpt
 
 test

@@ -186,6 +186,138 @@ end
 
 <h1>Chapter 07 algorithm design</h1>
 
+<h2>Task</h2>
+
+<p>Find the maximum sum inside a range.<br/>
+<code>[1,2,-4,2,4,-3,1]</code> => <code>[2,4]</code> => 6</p>
+
+<h2>Solutions</h2>
+
+<h3>Cubic time O(n³)</h3>
+
+<p>Find the maximum of every possible sub-range.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/07-algorithm-design/1-cubic.rb
+
+#runtime O(n³) 2 loops + the sum loop
+def find_max_sum_range(range)
+  max = 0
+  0.upto(range.length) do |start|
+    start.upto(range.length-1) do |end_at|
+      max = [range[start..end_at].sum, max].max
+    end
+  end
+  max
+end
+</code></pre>
+
+<h3>Quadratic time O(n²)</h3>
+
+<p>Find the maximum of every possible sub-range.<br/>
+Do not calculate the sum for every sub-range, rather just add each new element.</p>
+
+<p><code>[1,2,3]</code>: <code>[1]</code> => 1; <code>[1,2]</code> = 1+2 = 3; <code>[1,2,3]</code> = 3+3 = 6</p>
+
+<p><span></span></p>
+
+<pre><code># lib/07-algorithm-design/2-quadratic.rb
+
+def find_max_sum_range(range)
+  max = 0
+  0.upto(range.length) do |start|
+    sum=0
+    start.upto(range.length-1) do |end_at|
+      sum+=range[end_at]
+      max = [sum, max].max
+    end
+  end
+  max
+end
+</code></pre>
+
+<h3>Less than quadratic time O(n²)</h3>
+
+<p>Find the maximum of every possible sub-range.<br/>
+Build sums, where <code>sums[2] == range[0...2].sum</code>
+and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
+
+<p><span></span></p>
+
+<pre><code># lib/07-algorithm-design/3-quadratic-culmulative.rb
+
+def find_max_sum_range(range)
+  sums=[]
+  range.each{|x|sums &lt;&lt; sums.last.to_i+x}
+
+  max = 0
+  0.upto(range.length) do |start|
+    start.upto(range.length-1) do |end_at|
+      start_sum = if start == 0 then 0 else sums[start-1] end# sums[-1] == sums.last
+      sum_of_range = sums[end_at]-start_sum
+      max = [sum_of_range, max].max
+    end
+  end
+  max
+end
+</code></pre>
+
+<h3>Logarithmic time O(n log n)</h3>
+
+<p>Divide the problem into 2 smaller, equal problems. (compare: Binary search)
+Maximum of left / right and the maximum of ranges, that cross the middle are comparen.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/07-algorithm-design/4-logarithmic.rb
+
+def find_max_sum_range(range)
+  #trivial
+  return 0 if range.empty?
+  return [0,range[0]].max if range.length == 1
+
+  #divide
+  middle = range.length / 2
+  left = range[0...middle]
+  right = range[middle..-1]
+
+  #start from the middel, and build sums to left/right end, to find max, then add them
+  middle_max = [left.reverse, right].sum do |sub_range|
+    max = sum = 0
+    sub_range.each do |value|
+      sum+=value
+      max = [max,sum].max
+    end
+    max
+  end
+
+  [
+    middle_max,
+    find_max_sum_range(left),
+    find_max_sum_range(right)
+  ].max
+end
+</code></pre>
+
+<h3>Linear time O(n)</h3>
+
+<p>Compare the sums of all sub-parts. A part ends when its sum drops below 0.
+<span></span></p>
+
+<pre><code># lib/07-algorithm-design/5-linear.rb
+
+def find_max_sum_range(range)
+  max = partial_max = 0
+  range.each do |x|
+    # keep adding to partial max unless it sinks below 0
+    partial_max = [partial_max+x, 0].max
+    max = [partial_max, max].max
+  end
+  max
+end
+</code></pre>
+
 <h1>Chapter 13 searching</h1>
 
 <h1>Chapter 14 heaps</h1>
