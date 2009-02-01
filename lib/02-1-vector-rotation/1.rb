@@ -7,9 +7,6 @@ def swap(vector,i,j)
   vector[i], vector[j] = vector[j], vector[i]
 end
 
-# intuitive solution
-# rotate by shifting one position, steps-times
-# O(n*steps)
 def rotate(vector,steps)
   steps.times {
     (vector.length-1).times {|i| swap(vector,i,i+1)}
@@ -17,6 +14,7 @@ def rotate(vector,steps)
   vector
 end
 #----excerpt
+
 vector.length.times {|i|
   puts rotate(vector.dup,i) * ', '
 }

@@ -6,7 +6,8 @@ class Chapter
   def to_markdown
     text = heading
     text += read('text.markdown')
-    text.gsub(/^include ([^\s]*)$/){"\n"+extract_code_from_file($1)}
+    #list followed by code would include this code, so breaklast element by \n+some invisible content
+    text.gsub(/^include ([^\s]*)$/){"<span></span>\n"+extract_code_from_file($1)}
   end
 
 private

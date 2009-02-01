@@ -1,19 +1,21 @@
-def binary_find(range,number)
+#----excerpt
+def binary_find(range,searched)
   middle = range.length/2
   chosen = range[middle]
 
-  return middle if chosen == number
+  return middle if chosen == searched
   return nil if range.length <= 1
 
-  if chosen < number
+  if chosen < searched
     #search in the upper range, add middle to resulting index
-    found = binary_find(range[middle..-1],number)
+    found = binary_find(range[middle..-1],searched)
     if found then middle+found else nil end
   else
     #search in lower range
-    binary_find(range[0...middle],number)
+    binary_find(range[0...middle],searched)
   end
 end
+#----excerpt
 
 ran_from_cli = __FILE__ == $0
 if ran_from_cli

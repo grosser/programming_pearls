@@ -1,15 +1,19 @@
- - [1,2,3] rotate it once and we have [2,3,1]
+ - `[1,2,3]` rotated one place is `[2,3,1]`
  - Rotation of more than one step at a time is difficult
+
+Task
+----
+Rotate a given vector of length n, m places
 
 Constraints
 -----------
- - rotate without extra memory usage (no copies)
+ - rotate without extra memory usage (no copies of the vector)
 
 
 Solutions
 ---------
 ### 1 * x
-rote once, x times
+rotate one place, x times
 include 1.rb
 
 ### re-arrange in a copy

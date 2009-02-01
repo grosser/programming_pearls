@@ -1,5 +1,5 @@
-#gem 'mislav-bluecloth'
-require 'bluecloth'
+#require 'maruku'
+require 'rdiscount'
 
 class Book
   def initialize(chapter_path)
@@ -7,7 +7,8 @@ class Book
   end
 
   def to_html
-    BlueCloth.new(chapters.map(&:to_markdown) * "\n").to_html
+#    Maruku.new(chapters.map(&:to_markdown) * "\n").to_html_document
+    RDiscount.new(chapters.map(&:to_markdown) * "\n").to_html
   end
 
 private

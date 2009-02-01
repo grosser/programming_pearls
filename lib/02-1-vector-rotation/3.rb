@@ -4,7 +4,7 @@ vector = %w[a b c d e f g h i j]
 require 'rational'
 def rotate(vector,distance)
   length = vector.length
-  distance.gcd(length).times {|start|
+  distance.gcd(length).times do |start|
     temp = vector[start]
     offset = start
     while true do
@@ -14,10 +14,11 @@ def rotate(vector,distance)
       offset = swap_with
     end
     vector[offset] = temp
-  }
+  end
   vector
 end
 #----excerpt
+
 vector.length.times {|i|
   puts rotate(vector.dup,i) * ', '
 }
