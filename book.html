@@ -1,0 +1,92 @@
+<h1>Chapter 02 1 vector rotation</h1>
+
+<ul>
+<li>[1,2,3] rotate it once and we have [2,3,1]</li>
+<li>Rotation of more than one step at a time is difficult</li>
+</ul>
+
+<h2>Constraints</h2>
+
+<ul>
+<li>rotate without extra memory usage (no copies)</li>
+</ul>
+
+<h2>Solutions</h2>
+
+<h3>1 * x</h3>
+
+<p>rote once, x times</p>
+
+<pre><code># lib/02-1-vector-rotation/1.rb
+
+#helper
+def swap(vector,i,j)
+  j %= vector.length
+  vector[i], vector[j] = vector[j], vector[i]
+end
+
+# intuitive solution
+# rotate by shifting one position, steps-times
+# O(n*steps)
+def rotate(vector,steps)
+  steps.times {
+    (vector.length-1).times {|i| swap(vector,i,i+1)}
+  }
+  vector
+end
+</code></pre>
+
+<h3>re-arrange in a copy</h3>
+
+<p>Making copies is not allowed, but if it where it would be this simple.
+Make a copy, and re-arrange inside of it.</p>
+
+<pre><code># lib/02-1-vector-rotation/2.rb
+
+def rotate(vector,steps)
+  copy = vector.dup
+  vector.each_index do |i|
+    vector[i]=copy[(i+steps) % vector.length]
+  end
+end
+</code></pre>
+
+<h3>juggeling solution</h3>
+
+<p>temp&lt;-1 then 1&lt;-4&lt;-8&lt;-12 then 12&lt;-temp</p>
+
+<pre><code># lib/02-1-vector-rotation/3.rb
+
+require 'rational'
+def rotate(vector,distance)
+  length = vector.length
+  distance.gcd(length).times {|start|
+    temp = vector[start]
+    offset = start
+    while true do
+      swap_with = (offset + distance) % length
+      break if swap_with == start
+      vector[offset] = vector[swap_with]
+      offset = swap_with
+    end
+    vector[offset] = temp
+  }
+  vector
+end
+</code></pre>
+
+<h1>Chapter 02 2 anagrams</h1>
+
+<h1>Chapter 04 binary search</h1>
+
+<h1>Chapter 07 algorithm design</h1>
+
+<h1>Chapter 13 searching</h1>
+
+<h1>Chapter 14 heaps</h1>
+
+<h1>Chapter 15 1 count words</h1>
+
+<h1>Chapter 15 2 duplicate phrases</h1>
+
+<h1>Chapter 15 3 markov</h1>

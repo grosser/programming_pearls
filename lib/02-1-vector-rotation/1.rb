@@ -1,5 +1,6 @@
 vector = %w[a b c d e f g h i j]
 
+#----excerpt
 #helper
 def swap(vector,i,j)
   j %= vector.length
@@ -15,7 +16,7 @@ def rotate(vector,steps)
   }
   vector
 end
-
+#----excerpt
 vector.length.times {|i|
   puts rotate(vector.dup,i) * ', '
 }

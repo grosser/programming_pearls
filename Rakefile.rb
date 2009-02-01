@@ -9,3 +9,9 @@ task :test do |t|
     puts `ruby #{path}`
   }
 end
+
+task :to_html do
+  require 'lib/book/book'
+  require 'lib/book/chapter'
+  File.open('book.html','w'){|f| f.puts Book.new('lib').to_html}
+end

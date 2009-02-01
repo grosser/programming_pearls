@@ -1,8 +1,7 @@
-require 'rational'
 vector = %w[a b c d e f g h i j]
 
-# juggeling solution
-# O(n) + extra space
+#----excerpt
+require 'rational'
 def rotate(vector,distance)
   length = vector.length
   distance.gcd(length).times {|start|
@@ -18,7 +17,7 @@ def rotate(vector,distance)
   }
   vector
 end
-
+#----excerpt
 vector.length.times {|i|
   puts rotate(vector.dup,i) * ', '
 }
