@@ -1,28 +1,25 @@
+<p><span></span></p>
+
 <h1>Chapter 02 1 vector rotation</h1>
-
-<ul>
-<li><code>[1,2,3]</code> rotated one place is <code>[2,3,1]</code></li>
-<li>Rotation of more than one step at a time is difficult</li>
-</ul>
-
 
 <h2>Task</h2>
 
-<p>Rotate a given vector of length n, m places</p>
-
-<h2>Constraints</h2>
-
 <ul>
+<li>rotate a given vector of length n, m places</li>
 <li>rotate without extra memory usage (no copies of the vector)</li>
 </ul>
 
 
 <h2>Solutions</h2>
 
+<p><code>[1,2,3]</code> rotated one place is <code>[2,3,1]</code>.<br/>
+Rotation of more than one step at a time is difficult.</p>
+
 <h3>1 * x</h3>
 
-<p>rotate one place, x times
-<span></span></p>
+<p>rotate one place, x times</p>
+
+<p><span></span></p>
 
 <pre><code># lib/02-1-vector-rotation/1.rb
 
@@ -43,8 +40,9 @@ end
 <h3>re-arrange in a copy</h3>
 
 <p>Making copies is not allowed, but if it where it would be this simple.
-Make a copy, and re-arrange inside of it.
-<span></span></p>
+Make a copy, and re-arrange inside of it.</p>
+
+<p><span></span></p>
 
 <pre><code># lib/02-1-vector-rotation/2.rb
 
@@ -58,8 +56,9 @@ end
 
 <h3>juggeling solution</h3>
 
-<p>temp&lt;-1 then 1&lt;-4&lt;-8&lt;-12 then 12&lt;-temp
-<span></span></p>
+<p>temp&lt;-1 then 1&lt;-4&lt;-8&lt;-12 then 12&lt;-temp</p>
+
+<p><span></span></p>
 
 <pre><code># lib/02-1-vector-rotation/3.rb
 
@@ -81,9 +80,9 @@ def rotate(vector,distance)
 end
 </code></pre>
 
-<h1>Chapter 02 2 anagrams</h1>
+<p><span></span></p>
 
-<p>An anagram for 'no' is 'on', meaning same letters - different order.</p>
+<h1>Chapter 02 2 anagrams</h1>
 
 <h2>Task</h2>
 
@@ -95,8 +94,10 @@ end
 
 <h2>Solution</h2>
 
+<p>An anagram for 'no' is 'on', meaning same letters - different order.</p>
+
 <ul>
-<li>Store each word in a hash, where the key are the words sorted letters and the values are all words with the same letters</li>
+<li>Store each word in a Hash, where the key are the words sorted letters and the values are all words with the same letters</li>
 <li>Remove all keys that only have a single anagram</li>
 </ul>
 
@@ -113,6 +114,8 @@ anagrams.each do |anagram,words|
   puts "#{anagram} = #{words*', '}"
 end
 </code></pre>
+
+<p><span></span></p>
 
 <h1>Chapter 04 binary search</h1>
 
@@ -183,6 +186,8 @@ describe :binary_find do
   end
 end
 </code></pre>
+
+<p><span></span></p>
 
 <h1>Chapter 07 algorithm design</h1>
 
@@ -302,8 +307,9 @@ end
 
 <h3>Linear time O(n)</h3>
 
-<p>Compare the sums of all sub-parts. A part ends when its sum drops below 0.
-<span></span></p>
+<p>Compare the sums of all sub-parts. A part ends when its sum drops below 0.</p>
+
+<p><span></span></p>
 
 <pre><code># lib/07-algorithm-design/5-linear.rb
 
@@ -318,12 +324,380 @@ def find_max_sum_range(range)
 end
 </code></pre>
 
+<p><span></span></p>
+
 <h1>Chapter 13 searching</h1>
+
+<h2>Task</h2>
+
+<ul>
+<li>insert randomly generated numbers into a set</li>
+<li>insert one-by-one</li>
+<li>the set must not contain duplicates after a insertion</li>
+<li>return a sorted set, with the requested size, after the last insertion</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>1. Hash</h3>
+
+<p>Insert unless key exists, sort at the end</p>
+
+<p><span></span></p>
+
+<pre><code># lib/13-searching/1-hash.rb
+
+class SetHash
+  def initialize(maximum_value)
+    @maximum = maximum_value
+  end
+
+  def generate(size)
+    raise "size too big" if size &gt;= @maximum #would runs endless
+    @set = {}
+    while @set.size &lt; size
+      random = rand(@maximum)
+      @set[random]=true unless @set[random]
+    end
+    @set.keys.sort
+  end
+end
+</code></pre>
+
+<h3>2. Array</h3>
+
+<p>Insert unless element is included, sort at the end</p>
+
+<p><span></span></p>
+
+<pre><code># lib/13-searching/2-naive-array.rb
+
+class SetArray
+  def initialize(maximum_value)
+    @maximum = maximum_value
+  end
+
+  def generate(size)
+    raise "size too big" if size &gt;= @maximum #would runs endless
+    @set = []
+    while @set.size &lt; size
+      random = rand(@maximum)
+      @set &lt;&lt; random unless @set.include?(random)
+    end
+    @set.sort
+  end
+end
+</code></pre>
+
+<h3>3. Sorted-Linked-List</h3>
+
+<p>A linked list of sorted elements, for easy injection.</p>
+
+<pre><code>@head = {:value=&gt;1,:next=&gt;{:value=&gt;3,:next=&gt;nil}}
+</code></pre>
+
+<p>Go thorugh the elements until the insertion position is found.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/13-searching/3-linked.rb
+
+class SetLinked
+  def initialize(maximum_value)
+    @maximum = maximum_value
+  end
+
+  def generate(size)
+    raise "size too big" if size &gt;= @maximum #would runs endless
+    reset
+    insert(rand(@maximum)) while @size &lt; size
+    flatten
+  end
+
+  def reset
+    @head = nil
+    @size = 0
+  end
+
+  def flatten
+    flat = []
+    link = @head
+    while true
+      flat &lt;&lt; link[:value]
+      break unless link[:next]
+      link = link[:next]
+    end
+    flat
+  end
+
+  #insert a number if its new, and update @size counter
+  def insert(number)
+    return if include?(number)
+    @head = insert_link(@head,number)
+    @size += 1
+  end
+
+  def insert_link(link,number)
+    return {:value=&gt;number,:next=&gt;link} if not link or number &lt;= link[:value]
+    link[:next] = insert_link(link[:next],number)
+    link
+  end
+
+  def include?(number)
+    link = @head
+    while link
+      return true if link[:value] == number
+      return false if link[:value] &gt; number
+      link = link[:next]
+    end
+    return false
+  end
+end
+</code></pre>
+
+<p>Using an array (<code>[2,[3,[5,nil]]]</code>) instead of the more-readable <code>hash[:next]</code>, only saves 1/100th of the time.</p>
+
+<h3>4. Sorted Array</h3>
+
+<p>Place elements in a sorted Array, find insertion position using binary-search.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/13-searching/4-binary-array.rb
+
+class BinaryArray
+  def initialize(maximum_value)
+    @maximum = maximum_value
+  end
+
+  def generate(size)
+    raise "size too big" if size &gt;= @maximum #would runs endless
+    @set = []
+    while @set.size &lt; size
+      random = rand(@maximum)
+      found, position = binary_find(random)
+      @set.insert(position,random) unless found
+    end
+    @set
+  end
+
+  # search inside the ordered @set
+  # return [found,position] where position is where it was found
+  # or if not found, where it should be inserted
+  def binary_find(value,left=0,right=@set.length-1)
+    length_to_search = right+1-left
+    middle = left + length_to_search/2
+
+    #found or not found?
+    return [true,middle] if @set[middle] == value
+    if length_to_search &lt;= 1
+      middle += 1 if @set[middle] and @set[middle] &lt; value
+      return [false,[middle,0].max]
+    end
+
+    #not sure yet, recurse!
+    if @set[middle] &gt; value
+      binary_find(value,left,middle-1)
+    else
+      binary_find(value,middle+1,right)
+    end
+  end
+end
+</code></pre>
+
+<h2>Time</h2>
+
+<ol>
+<li>O(n) - lookups always take the same time</li>
+<li>O(n²) - the longer the array, the longer the lookup takes</li>
+<li>O(n²) - the longer the array, 1/2(mean) the longer the lookup takes</li>
+<li>n log n - divide and conquer</li>
+</ol>
+
+
+<h2>Performance</h2>
+
+<p>Inserting x items in 2 seconds:
+ 1.  200_000
+ 2.  5_000
+ 3.  ~1_250
+ 4.  20_000</p>
+
+<h2>Conclusion</h2>
+
+<ul>
+<li>nothing beats linear time</li>
+<li>when in doubt choose native objects over self-built (2. vs 3.)</li>
+<li>when self-built has a lower 'time', investigate performance</li>
+</ul>
+
+
+<p><span></span></p>
 
 <h1>Chapter 14 heaps</h1>
 
+<h2>Task</h2>
+
+<ul>
+<li>build and maintain a sorted heap</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<p>A heap, where each nodes children are lower then their parent.</p>
+
+<pre><code>     2
+   3    4
+  5 7 10 12
+</code></pre>
+
+<p>When we look at this as array, it would be <code>[2,3,4,5,7,10,12]</code>.
+To insert a new element, we simply append to the array<br/>
+and then let the new element flow up (swap with parent)<br/>
+until it reaches a parent that is lower higher higher than itself.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/14-heaps/1.rb
+
+class Heap
+  def initialize
+    @values = []
+  end
+
+  def insert_bottom(value)
+    @values &lt;&lt; value
+    position = @values.length - 1
+    while true
+      return if position == root
+      return if @values[parent(position)] &lt; value
+      swap_with_parent(position)
+      position = parent(position)
+    end
+  end
+
+  # show each node, with its children
+  #TODO print a real tree...
+  def print
+    0.upto(@values.length-1){|i|
+      to_s = lambda{|x| "#{x}(#{@values[x]})"}
+      puts "#{to_s.call(i)} #{to_s.call(left_child(i))} #{to_s.call(right_child(i))}"
+    }
+  end
+
+private
+
+  def swap_with_parent(i)
+    @values[parent(i)], @values[i] = @values[i], @values[parent(i)]
+  end
+
+  def root
+    0
+  end
+
+  def parent(i)
+    (i+1)/2 - 1
+  end
+
+  def left_child(i)
+    (2*i)+1
+  end
+
+  def right_child(i)
+    (2*i)+2
+  end
+end
+</code></pre>
+
+<p><span></span></p>
+
 <h1>Chapter 15 1 count words</h1>
 
+<h2>Task &amp; Solutions</h2>
+
+<h3>Unique words</h3>
+
+<p>Show all words that are inside a given text (unique)!</p>
+
+<p><span></span></p>
+
+<pre><code># lib/15-1-count-words/1.rb
+
+puts input.readlines(' ').uniq * "\n"
+</code></pre>
+
+<h3>Word counting</h3>
+
+<p>Show all words sorted by number of occurance!</p>
+
+<p>Use a 0-based Hash to mark how often a word has occured.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/15-1-count-words/2.rb
+
+occurances = Hash.new(0)
+input.each(' ').each{|word| occurances[word]+=1}
+puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
+</code></pre>
+
+<h3>Benchmarking</h3>
+
+<p>Benchmark occurance counting solution!</p>
+
+<p><span></span></p>
+
+<pre><code># lib/15-1-count-words/3-1.rb
+
+occurances = nil
+
+processing = measure do
+  occurances = Hash.new(0)
+  input.each(' '){|word| occurances[word]+=1}
+end
+printing = measure do
+  puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
+end
+</code></pre>
+
+<h3>Optimization</h3>
+
+<p>Optimize for performance!</p>
+
+<p>Reading the File once and splitting later.</p>
+
+<p><span></span></p>
+
+<pre><code># lib/15-1-count-words/3-2.rb
+
+occurances = nil
+processing = measure do
+  occurances = Hash.new(0)
+  input.read.split(' ').each{|word| occurances[word]+=1}
+end
+printing = measure do
+  puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
+end
+</code></pre>
+
+<p>Benchmarking of optimized occurance search<br/>
+shows that it is faster (2.5s vs 3.0s for processing)</p>
+
+<p>Memroy usage: ("puts memory" inside the processing loop)</p>
+
+<pre><code>normal:    mapped: 17652K    writeable/private: 2180K    shared: 0K
+optimized: mapped: 109892K   writeable/private: 94420K   shared: 0K
+</code></pre>
+
+<p>optimized: the text (4.x mb) is in memory twice (once for <code>IO.read</code> and<br/>
+once for <code>text.split</code>, no garbage collection was run)</p>
+
+<p><span></span></p>
+
 <h1>Chapter 15 2 duplicate phrases</h1>
+
+<p><span></span></p>
 
 <h1>Chapter 15 3 markov</h1>

@@ -1,9 +1,9 @@
-# use a plain array
-# other method: use a sorted array and use binary search to find insertion position
+#----excerpt
 class SetArray
   def initialize(maximum_value)
     @maximum = maximum_value
   end
+  
   def generate(size)
     raise "size too big" if size >= @maximum #would runs endless
     @set = []
@@ -14,5 +14,6 @@ class SetArray
     @set.sort
   end
 end
+#----excerpt
 
 puts SetArray.new(500_000).generate(5_000)*'-'#thats 1/40th of the SetHash size

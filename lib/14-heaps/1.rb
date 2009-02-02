@@ -1,7 +1,4 @@
-# a heap, where each nodes children are lower then their parent
-#         0
-#       1   2
-#      3 4 5 6
+#----excerpt
 class Heap
   def initialize
     @values = []
@@ -49,6 +46,7 @@ private
     (2*i)+2
   end
 end
+#----excerpt
 
 h = Heap.new
 10.times{

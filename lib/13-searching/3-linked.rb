@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__),'..','..','helpers','helper')
 
-# use a linked hashes
-# @head = {:value=>1,:next=>{:value=>2,:next=>nil}}
+#----excerpt
 class SetLinked
   def initialize(maximum_value)
     @maximum = maximum_value
@@ -53,8 +52,7 @@ class SetLinked
     return false
   end
 end
+#----excerpt
 
-#thats 1/200th of the SetHash size
-#using array instead of the more-readable hash[:next], only saves 1/100th of the time
 #going over 1_200 results in "stack level to deep" (non-recursive solution is longer/uglier...)
 puts SetLinked.new(500_000).generate(1_150) * '-'

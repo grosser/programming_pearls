@@ -1,8 +1,9 @@
-# use a hash to store the set in its keys
+#----excerpt
 class SetHash
   def initialize(maximum_value)
     @maximum = maximum_value
   end
+  
   def generate(size)
     raise "size too big" if size >= @maximum #would runs endless
     @set = {}
@@ -13,5 +14,6 @@ class SetHash
     @set.keys.sort
   end
 end
+#----excerpt
 
 puts SetHash.new(500_000).generate(200_000)*'-'

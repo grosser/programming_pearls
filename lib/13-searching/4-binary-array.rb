@@ -1,9 +1,9 @@
-# use a plain array
-# other method: use a sorted array and use binary search to find insertion position
-class SetArray
+#----excerpt
+class BinaryArray
   def initialize(maximum_value)
     @maximum = maximum_value
   end
+
   def generate(size)
     raise "size too big" if size >= @maximum #would runs endless
     @set = []
@@ -14,6 +14,7 @@ class SetArray
     end
     @set
   end
+
   # search inside the ordered @set
   # return [found,position] where position is where it was found
   # or if not found, where it should be inserted
@@ -36,5 +37,6 @@ class SetArray
     end
   end
 end
+#----excerpt
 
-puts SetArray.new(500_000).generate(20_000)*'-'#thats 1/10th of the SetHash size
+puts BinaryArray.new(500_000).generate(20_000)*'-'#thats 1/10th of the SetHash size
