@@ -33,20 +33,20 @@ Rotation of more than one step at a time is difficult.</p>
 
 <p><span></span></p>
 
-<pre><code># lib/02-1-vector-rotation/1.rb
+<pre><code> # lib/02-1-vector-rotation/1.rb
 
-#helper
-def swap(vector,i,j)
-  j %= vector.length
-  vector[i], vector[j] = vector[j], vector[i]
-end
+ #helper
+ def swap(vector,i,j)
+   j %= vector.length
+   vector[i], vector[j] = vector[j], vector[i]
+ end
 
-def rotate(vector,steps)
-  steps.times {
-    (vector.length-1).times {|i| swap(vector,i,i+1)}
-  }
-  vector
-end
+ def rotate(vector,steps)
+   steps.times {
+     (vector.length-1).times {|i| swap(vector,i,i+1)}
+   }
+   vector
+ end
 </code></pre>
 
 <h3>re-arrange in a copy</h3>
@@ -56,14 +56,14 @@ Make a copy, and re-arrange inside of it.</p>
 
 <p><span></span></p>
 
-<pre><code># lib/02-1-vector-rotation/2.rb
+<pre><code> # lib/02-1-vector-rotation/2.rb
 
-def rotate(vector,steps)
-  copy = vector.dup
-  vector.each_index do |i|
-    vector[i]=copy[(i+steps) % vector.length]
-  end
-end
+ def rotate(vector,steps)
+   copy = vector.dup
+   vector.each_index do |i|
+     vector[i]=copy[(i+steps) % vector.length]
+   end
+ end
 </code></pre>
 
 <h3>juggeling solution</h3>
@@ -72,24 +72,24 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/02-1-vector-rotation/3.rb
+<pre><code> # lib/02-1-vector-rotation/3.rb
 
-require 'rational'
-def rotate(vector,distance)
-  length = vector.length
-  distance.gcd(length).times do |start|
-    temp = vector[start]
-    offset = start
-    while true do
-      swap_with = (offset + distance) % length
-      break if swap_with == start
-      vector[offset] = vector[swap_with]
-      offset = swap_with
-    end
-    vector[offset] = temp
-  end
-  vector
-end
+ require 'rational'
+ def rotate(vector,distance)
+   length = vector.length
+   distance.gcd(length).times do |start|
+     temp = vector[start]
+     offset = start
+     while true do
+       swap_with = (offset + distance) % length
+       break if swap_with == start
+       vector[offset] = vector[swap_with]
+       offset = swap_with
+     end
+     vector[offset] = temp
+   end
+   vector
+ end
 </code></pre>
 
 <p><span></span></p>
@@ -116,15 +116,15 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/02-2-anagrams/1.rb
+<pre><code> # lib/02-2-anagrams/1.rb
 
-anagrams = Hash.new([])
-input.each {|word| anagrams[word.split('').sort] += [word]}
-anagrams.each do |anagram,words|
-  words.uniq!
-  next if words.size == 1
-  puts "#{anagram} = #{words*', '}"
-end
+ anagrams = Hash.new([])
+ input.each {|word| anagrams[word.split('').sort] += [word]}
+ anagrams.each do |anagram,words|
+   words.uniq!
+   next if words.size == 1
+   puts "#{anagram} = #{words*', '}"
+ end
 </code></pre>
 
 <p><span></span></p>
@@ -154,49 +154,52 @@ Return nil when no elements are left in the search space.</p>
 
 <p><span></span></p>
 
-<pre><code># lib/04-binary-search/1.rb
+<pre><code> # lib/04-binary-search/1.rb
 
-def binary_find(range,searched)
-  middle = range.length/2
-  chosen = range[middle]
+ def binary_find(range,searched)
+   middle = range.length/2
+   chosen = range[middle]
 
-  return middle if chosen == searched
-  return nil if range.length &lt;= 1
+   return middle if chosen == searched
+   return nil if range.length &lt;= 1
 
-  if chosen &lt; searched
-    #search in the upper range, add middle to resulting index
-    found = binary_find(range[middle..-1],searched)
-    if found then middle+found else nil end
-  else
-    #search in lower range
-    binary_find(range[0...middle],searched)
-  end
-end
+   if chosen &lt; searched
+     #search in the upper range, add middle to resulting
+       ⏎index
+     found = binary_find(range[middle..-1],searched)
+     if found then middle+found else nil end
+   else
+     #search in lower range
+     binary_find(range[0...middle],searched)
+   end
+ end
 </code></pre>
 
 <h2>Test</h2>
 
 <p><span></span></p>
 
-<pre><code># lib/04-binary-search/2.rb
+<pre><code> # lib/04-binary-search/2.rb
 
-require 'spec'
-describe :binary_find do
-  {
-    []=&gt;1,
-    [1]=&gt;1,
-    [1,3]=&gt;3,
-    [1,3,4]=&gt;3,
-    [1,3,4,6,8,9,12,15,17,20]=&gt;17
-  }.each do |range,searched|
-    it "find inside #{range.length} element array" do
-      binary_find(range,searched).should == range.index(searched)
-    end
-    it "returns nil when nothing could be found inside a #{range.length} element array" do
-      binary_find(range,2).should == nil
-    end
-  end
-end
+ require 'spec'
+ describe :binary_find do
+   {
+     []=&gt;1,
+     [1]=&gt;1,
+     [1,3]=&gt;3,
+     [1,3,4]=&gt;3,
+     [1,3,4,6,8,9,12,15,17,20]=&gt;17
+   }.each do |range,searched|
+     it "find inside #{range.length} element array" do
+       binary_find(range,searched).should ==
+         ⏎range.index(searched)
+     end
+     it "returns nil when nothing could be found inside a
+       ⏎#{range.length} element array" do
+       binary_find(range,2).should == nil
+     end
+   end
+ end
 </code></pre>
 
 <p><span></span></p>
@@ -216,18 +219,18 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/07-algorithm-design/1-cubic.rb
+<pre><code> # lib/07-algorithm-design/1-cubic.rb
 
-#runtime O(n³) 2 loops + the sum loop
-def find_max_sum_range(range)
-  max = 0
-  0.upto(range.length) do |start|
-    start.upto(range.length-1) do |end_at|
-      max = [range[start..end_at].sum, max].max
-    end
-  end
-  max
-end
+ #runtime O(n³) 2 loops + the sum loop
+ def find_max_sum_range(range)
+   max = 0
+   0.upto(range.length) do |start|
+     start.upto(range.length-1) do |end_at|
+       max = [range[start..end_at].sum, max].max
+     end
+   end
+   max
+ end
 </code></pre>
 
 <h3>Quadratic time O(n²)</h3>
@@ -239,19 +242,19 @@ Do not calculate the sum for every sub-range, rather just add each new element.<
 
 <p><span></span></p>
 
-<pre><code># lib/07-algorithm-design/2-quadratic.rb
+<pre><code> # lib/07-algorithm-design/2-quadratic.rb
 
-def find_max_sum_range(range)
-  max = 0
-  0.upto(range.length) do |start|
-    sum=0
-    start.upto(range.length-1) do |end_at|
-      sum+=range[end_at]
-      max = [sum, max].max
-    end
-  end
-  max
-end
+ def find_max_sum_range(range)
+   max = 0
+   0.upto(range.length) do |start|
+     sum=0
+     start.upto(range.length-1) do |end_at|
+       sum+=range[end_at]
+       max = [sum, max].max
+     end
+   end
+   max
+ end
 </code></pre>
 
 <h3>Less than quadratic time O(n²)</h3>
@@ -262,22 +265,23 @@ and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
 
 <p><span></span></p>
 
-<pre><code># lib/07-algorithm-design/3-quadratic-culmulative.rb
+<pre><code> # lib/07-algorithm-design/3-quadratic-culmulative.rb
 
-def find_max_sum_range(range)
-  sums=[]
-  range.each{|x|sums &lt;&lt; sums.last.to_i+x}
+ def find_max_sum_range(range)
+   sums=[]
+   range.each{|x|sums &lt;&lt; sums.last.to_i+x}
 
-  max = 0
-  0.upto(range.length) do |start|
-    start.upto(range.length-1) do |end_at|
-      start_sum = if start == 0 then 0 else sums[start-1] end# sums[-1] == sums.last
-      sum_of_range = sums[end_at]-start_sum
-      max = [sum_of_range, max].max
-    end
-  end
-  max
-end
+   max = 0
+   0.upto(range.length) do |start|
+     start.upto(range.length-1) do |end_at|
+       start_sum = if start == 0 then 0 else sums[start-1]
+         ⏎end# sums[-1] == sums.last
+       sum_of_range = sums[end_at]-start_sum
+       max = [sum_of_range, max].max
+     end
+   end
+   max
+ end
 </code></pre>
 
 <h3>Logarithmic time O(n log n)</h3>
@@ -287,34 +291,35 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
 
 <p><span></span></p>
 
-<pre><code># lib/07-algorithm-design/4-logarithmic.rb
+<pre><code> # lib/07-algorithm-design/4-logarithmic.rb
 
-def find_max_sum_range(range)
-  #trivial
-  return 0 if range.empty?
-  return [0,range[0]].max if range.length == 1
+ def find_max_sum_range(range)
+   #trivial
+   return 0 if range.empty?
+   return [0,range[0]].max if range.length == 1
 
-  #divide
-  middle = range.length / 2
-  left = range[0...middle]
-  right = range[middle..-1]
+   #divide
+   middle = range.length / 2
+   left = range[0...middle]
+   right = range[middle..-1]
 
-  #start from the middel, and build sums to left/right end, to find max, then add them
-  middle_max = [left.reverse, right].sum do |sub_range|
-    max = sum = 0
-    sub_range.each do |value|
-      sum+=value
-      max = [max,sum].max
-    end
-    max
-  end
+   #start from the middel, and build sums to left/right end,
+     ⏎to find max, then add them
+   middle_max = [left.reverse, right].sum do |sub_range|
+     max = sum = 0
+     sub_range.each do |value|
+       sum+=value
+       max = [max,sum].max
+     end
+     max
+   end
 
-  [
-    middle_max,
-    find_max_sum_range(left),
-    find_max_sum_range(right)
-  ].max
-end
+   [
+     middle_max,
+     find_max_sum_range(left),
+     find_max_sum_range(right)
+   ].max
+ end
 </code></pre>
 
 <h3>Linear time O(n)</h3>
@@ -323,17 +328,17 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/07-algorithm-design/5-linear.rb
+<pre><code> # lib/07-algorithm-design/5-linear.rb
 
-def find_max_sum_range(range)
-  max = partial_max = 0
-  range.each do |x|
-    # keep adding to partial max unless it sinks below 0
-    partial_max = [partial_max+x, 0].max
-    max = [partial_max, max].max
-  end
-  max
-end
+ def find_max_sum_range(range)
+   max = partial_max = 0
+   range.each do |x|
+     # keep adding to partial max unless it sinks below 0
+     partial_max = [partial_max+x, 0].max
+     max = [partial_max, max].max
+   end
+   max
+ end
 </code></pre>
 
 <p><span></span></p>
@@ -358,23 +363,24 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/13-searching/1-hash.rb
+<pre><code> # lib/13-searching/1-hash.rb
 
-class SetHash
-  def initialize(maximum_value)
-    @maximum = maximum_value
-  end
+ class SetHash
+   def initialize(maximum_value)
+     @maximum = maximum_value
+   end
 
-  def generate(size)
-    raise "size too big" if size &gt;= @maximum #would runs endless
-    @set = {}
-    while @set.size &lt; size
-      random = rand(@maximum)
-      @set[random]=true unless @set[random]
-    end
-    @set.keys.sort
-  end
-end
+   def generate(size)
+     raise "size too big" if size &gt;= @maximum #would runs
+       ⏎endless
+     @set = {}
+     while @set.size &lt; size
+       random = rand(@maximum)
+       @set[random]=true unless @set[random]
+     end
+     @set.keys.sort
+   end
+ end
 </code></pre>
 
 <h3>2. Array</h3>
@@ -383,23 +389,24 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/13-searching/2-naive-array.rb
+<pre><code> # lib/13-searching/2-naive-array.rb
 
-class SetArray
-  def initialize(maximum_value)
-    @maximum = maximum_value
-  end
+ class SetArray
+   def initialize(maximum_value)
+     @maximum = maximum_value
+   end
 
-  def generate(size)
-    raise "size too big" if size &gt;= @maximum #would runs endless
-    @set = []
-    while @set.size &lt; size
-      random = rand(@maximum)
-      @set &lt;&lt; random unless @set.include?(random)
-    end
-    @set.sort
-  end
-end
+   def generate(size)
+     raise "size too big" if size &gt;= @maximum #would runs
+       ⏎endless
+     @set = []
+     while @set.size &lt; size
+       random = rand(@maximum)
+       @set &lt;&lt; random unless @set.include?(random)
+     end
+     @set.sort
+   end
+ end
 </code></pre>
 
 <h3>3. Sorted-Linked-List</h3>
@@ -413,59 +420,61 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/13-searching/3-linked.rb
+<pre><code> # lib/13-searching/3-linked.rb
 
-class SetLinked
-  def initialize(maximum_value)
-    @maximum = maximum_value
-  end
+ class SetLinked
+   def initialize(maximum_value)
+     @maximum = maximum_value
+   end
 
-  def generate(size)
-    raise "size too big" if size &gt;= @maximum #would runs endless
-    reset
-    insert(rand(@maximum)) while @size &lt; size
-    flatten
-  end
+   def generate(size)
+     raise "size too big" if size &gt;= @maximum #would runs
+       ⏎endless
+     reset
+     insert(rand(@maximum)) while @size &lt; size
+     flatten
+   end
 
-  def reset
-    @head = nil
-    @size = 0
-  end
+   def reset
+     @head = nil
+     @size = 0
+   end
 
-  def flatten
-    flat = []
-    link = @head
-    while true
-      flat &lt;&lt; link[:value]
-      break unless link[:next]
-      link = link[:next]
-    end
-    flat
-  end
+   def flatten
+     flat = []
+     link = @head
+     while true
+       flat &lt;&lt; link[:value]
+       break unless link[:next]
+       link = link[:next]
+     end
+     flat
+   end
 
-  #insert a number if its new, and update @size counter
-  def insert(number)
-    return if include?(number)
-    @head = insert_link(@head,number)
-    @size += 1
-  end
+   #insert a number if its new, and update @size counter
+   def insert(number)
+     return if include?(number)
+     @head = insert_link(@head,number)
+     @size += 1
+   end
 
-  def insert_link(link,number)
-    return {:value=&gt;number,:next=&gt;link} if not link or number &lt;= link[:value]
-    link[:next] = insert_link(link[:next],number)
-    link
-  end
+   def insert_link(link,number)
+     return {:value=&gt;number,:next=&gt;link} if not link or
+       ⏎number &lt;= link[:value]
+     link[:next] = insert_link(link[:next],number)
+     link
+   end
 
-  def include?(number)
-    link = @head
-    while link
-      return true if link[:value] == number
-      return false if link[:value] &gt; number
-      link = link[:next]
-    end
-    return false
-  end
-end
+   def include?(number)
+     link = @head
+     while link
+       return true if link[:value] == number
+       return false if link[:value] &gt; number
+       link = link[:next]
+     end
+     return false
+   end
+ end
 </code></pre>
 
 <p>Using an array (<code>[2,[3,[5,nil]]]</code>) instead of the more-readable <code>hash[:next]</code>, only saves 1/100th of the time.</p>
@@ -476,46 +485,48 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/13-searching/4-binary-array.rb
+<pre><code> # lib/13-searching/4-binary-array.rb
 
-class BinaryArray
-  def initialize(maximum_value)
-    @maximum = maximum_value
-  end
+ class BinaryArray
+   def initialize(maximum_value)
+     @maximum = maximum_value
+   end
 
-  def generate(size)
-    raise "size too big" if size &gt;= @maximum #would runs endless
-    @set = []
-    while @set.size &lt; size
-      random = rand(@maximum)
-      found, position = binary_find(random)
-      @set.insert(position,random) unless found
-    end
-    @set
-  end
+   def generate(size)
+     raise "size too big" if size &gt;= @maximum #would runs
+       ⏎endless
+     @set = []
+     while @set.size &lt; size
+       random = rand(@maximum)
+       found, position = binary_find(random)
+       @set.insert(position,random) unless found
+     end
+     @set
+   end
 
-  # search inside the ordered @set
-  # return [found,position] where position is where it was found
-  # or if not found, where it should be inserted
-  def binary_find(value,left=0,right=@set.length-1)
-    length_to_search = right+1-left
-    middle = left + length_to_search/2
+   # search inside the ordered @set
+   # return [found,position] where position is where it was
+     ⏎found
+   # or if not found, where it should be inserted
+   def binary_find(value,left=0,right=@set.length-1)
+     length_to_search = right+1-left
+     middle = left + length_to_search/2
 
-    #found or not found?
-    return [true,middle] if @set[middle] == value
-    if length_to_search &lt;= 1
-      middle += 1 if @set[middle] and @set[middle] &lt; value
-      return [false,[middle,0].max]
-    end
+     #found or not found?
+     return [true,middle] if @set[middle] == value
+     if length_to_search &lt;= 1
+       middle += 1 if @set[middle] and @set[middle] &lt; value
+       return [false,[middle,0].max]
+     end
 
-    #not sure yet, recurse!
-    if @set[middle] &gt; value
-      binary_find(value,left,middle-1)
-    else
-      binary_find(value,middle+1,right)
-    end
-  end
-end
+     #not sure yet, recurse!
+     if @set[middle] &gt; value
+       binary_find(value,left,middle-1)
+     else
+       binary_find(value,middle+1,right)
+     end
+   end
+ end
 </code></pre>
 
 <h2>Time</h2>
@@ -572,55 +583,57 @@ until it reaches a parent that is lower higher higher than itself.</p>
 
 <p><span></span></p>
 
-<pre><code># lib/14-heaps/1.rb
+<pre><code> # lib/14-heaps/1.rb
 
-class Heap
-  def initialize
-    @values = []
-  end
+ class Heap
+   def initialize
+     @values = []
+   end
 
-  def insert_bottom(value)
-    @values &lt;&lt; value
-    position = @values.length - 1
-    while true
-      return if position == root
-      return if @values[parent(position)] &lt; value
-      swap_with_parent(position)
-      position = parent(position)
-    end
-  end
+   def insert_bottom(value)
+     @values &lt;&lt; value
+     position = @values.length - 1
+     while true
+       return if position == root
+       return if @values[parent(position)] &lt; value
+       swap_with_parent(position)
+       position = parent(position)
+     end
+   end
 
-  # show each node, with its children
-  #TODO print a real tree...
-  def print
-    0.upto(@values.length-1){|i|
-      to_s = lambda{|x| "#{x}(#{@values[x]})"}
-      puts "#{to_s.call(i)} #{to_s.call(left_child(i))} #{to_s.call(right_child(i))}"
-    }
-  end
+   # show each node, with its children
+   #TODO print a real tree...
+   def print
+     0.upto(@values.length-1){|i|
+       to_s = lambda{|x| "#{x}(#{@values[x]})"}
+       puts "#{to_s.call(i)} #{to_s.call(left_child(i))}
+         ⏎#{to_s.call(right_child(i))}"
+     }
+   end
 
-private
+ private
 
-  def swap_with_parent(i)
-    @values[parent(i)], @values[i] = @values[i], @values[parent(i)]
-  end
+   def swap_with_parent(i)
+     @values[parent(i)], @values[i] = @values[i],
+       ⏎@values[parent(i)]
+   end
 
-  def root
-    0
-  end
+   def root
+     0
+   end
 
-  def parent(i)
-    (i+1)/2 - 1
-  end
+   def parent(i)
+     (i+1)/2 - 1
+   end
 
-  def left_child(i)
-    (2*i)+1
-  end
+   def left_child(i)
+     (2*i)+1
+   end
 
-  def right_child(i)
-    (2*i)+2
-  end
-end
+   def right_child(i)
+     (2*i)+2
+   end
+ end
 </code></pre>
 
 <p><span></span></p>
@@ -635,9 +648,9 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/15-1-count-words/1.rb
+<pre><code> # lib/15-1-count-words/1.rb
 
-puts input.readlines(' ').uniq * "\n"
+ puts input.readlines(' ').uniq * "\n"
 </code></pre>
 
 <h3>Word counting</h3>
@@ -648,11 +661,12 @@ puts input.readlines(' ').uniq * "\n"
 
 <p><span></span></p>
 
-<pre><code># lib/15-1-count-words/2.rb
+<pre><code> # lib/15-1-count-words/2.rb
 
-occurances = Hash.new(0)
-input.each(' ').each{|word| occurances[word]+=1}
-puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
+ occurances = Hash.new(0)
+ input.each(' ').each{|word| occurances[word]+=1}
+ puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
+   ⏎times '} * "\n"
 </code></pre>
 
 <h3>Benchmarking</h3>
@@ -661,17 +675,19 @@ puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
 
 <p><span></span></p>
 
-<pre><code># lib/15-1-count-words/3-1.rb
+<pre><code> # lib/15-1-count-words/3-1.rb
 
-occurances = nil
+ occurances = nil
 
-processing = measure do
-  occurances = Hash.new(0)
-  input.each(' '){|word| occurances[word]+=1}
-end
-printing = measure do
-  puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
-end
+ processing = measure do
+   occurances = Hash.new(0)
+   input.each(' '){|word| occurances[word]+=1}
+ end
+ printing = measure do
+   puts
+     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
+     ⏎times '} * "\n"
+ end
 </code></pre>
 
 <h3>Optimization</h3>
@@ -682,16 +698,18 @@ end
 
 <p><span></span></p>
 
-<pre><code># lib/15-1-count-words/3-2.rb
+<pre><code> # lib/15-1-count-words/3-2.rb
 
-occurances = nil
-processing = measure do
-  occurances = Hash.new(0)
-  input.read.split(' ').each{|word| occurances[word]+=1}
-end
-printing = measure do
-  puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*' times '} * "\n"
-end
+ occurances = nil
+ processing = measure do
+   occurances = Hash.new(0)
+   input.read.split(' ').each{|word| occurances[word]+=1}
+ end
+ printing = measure do
+   puts
+     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
+     ⏎times '} * "\n"
+ end
 </code></pre>
 
 <p>Benchmarking of optimized occurance search<br/>
