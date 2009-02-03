@@ -13,5 +13,10 @@ end
 task :to_html do
   require 'lib/book/book'
   require 'lib/book/chapter'
-  File.open('book.html','w'){|f| f.puts Book.new('lib').to_html}
+
+  file = "output/book.html"
+  `rm -f #{file}`
+  `cp assets/book.template.html #{file}`
+  template = File.read(file).sub('INSERT_BODY_HERE',Book.new('lib').to_html)
+  File.open(file,'w'){|f|f.puts template}
 end

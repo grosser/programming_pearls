@@ -1,0 +1,7 @@
+/*New page for every h1, except first*/
+h1 {
+  page-break-before:always;
+}
+h1:first-child {
+  page-break-before:auto;
+}
