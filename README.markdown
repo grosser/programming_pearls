@@ -19,5 +19,7 @@ TODO
 ====
  - pack output html/css into a single archive -> easy download
  - there are some chapters missing
- - add page numbers for each 'refactored' solutions, so users can do a lookup
+ - add cover image (ruby necklace?)
+ - add introduction
+ - syntax highlighting (with js?)
  - add statistics: how does readable code compare to wtf-code
