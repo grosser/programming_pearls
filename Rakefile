@@ -19,6 +19,9 @@ task :to_html do
   `cp assets/book.template.html #{file}`
   template = File.read(file).sub('INSERT_BODY_HERE',Book.new('lib').to_html)
   File.open(file,'w'){|f|f.puts template}
+end
+
+task :zip do
   compress('output')
 end
 
