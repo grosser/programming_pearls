@@ -802,4 +802,59 @@ abc -> [abc,bc,c]</li>
 
 <h1>Chapter 15 3 markov</h1>
 
+<h2>Task</h2>
+
+<p>Generate a markov text from given seed data.</p>
+
+<h2>Solution</h2>
+
+<p>Generating random text by truely random placement of letters would be unnatural.</p>
+
+<pre><code>sovudhbyeonnapdubvne
+</code></pre>
+
+<p>Every letter in the alphabet has a certain probability to occur after another letter.</p>
+
+<pre><code>l -&gt; l=5% e=10% o=10% i=8% ....
+</code></pre>
+
+<p>This yields somewhat natural text</p>
+
+<pre><code>lleno deister
+</code></pre>
+
+<p>If we take more than one letter into account, readability inncreases.</p>
+
+<pre><code># markov-4 (4 letters used when calculating propability)
+"Hell" -&gt; o = 80%, ' '=20%
+</code></pre>
+
+<p>The more letters we take into account, the more natural the generated words sound.<br/>
+What we can do with letters, we can do with whole words!</p>
+
+<ul>
+<li>calculate the probability word A follows on word B, using seed data</li>
+<li>generate random text</li>
+</ul>
+
+
+<p><span></span></p>
+
+<pre><code> # lib/15-3-markov/1.rb
+
+ #build possible_successors for any used word
+ possible_successors = Hash.new([])
+ 0.upto(text.length-1) do |i|
+   possible_successors[text[i]] &lt;&lt; text[i+1]
+ end
+
+ #build text by randomly adding possible_successors
+ random_text = [text.first]
+ 0.upto(50).map do |i|
+   random_text &lt;&lt; possible_successors[random_text.last].rand
+ end
+
+ puts random_text * ' '
+</code></pre>
+
 </body>
