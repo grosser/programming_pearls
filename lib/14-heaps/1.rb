@@ -10,24 +10,15 @@ class Heap
     while true
       return if position == root
       return if @values[parent(position)] < value
-      swap_with_parent(position)
+      swap(position, parent(position))
       position = parent(position)
     end
   end
 
-  # show each node, with its children
-  #TODO print a real tree...
-  def print
-    0.upto(@values.length-1){|i|
-      to_s = lambda{|x| "#{x}(#{@values[x]})"}
-      puts "#{to_s.call(i)} #{to_s.call(left_child(i))} #{to_s.call(right_child(i))}"
-    }
-  end
-
 private
 
-  def swap_with_parent(i)
-    @values[parent(i)], @values[i] = @values[i], @values[parent(i)]
+  def swap(a,b)
+    @values[a], @values[b] = @values[b], @values[a]
   end
 
   def root
@@ -48,8 +39,22 @@ private
 end
 #----excerpt
 
-h = Heap.new
-10.times{
-  h.insert_bottom(rand(100))
-  puts h.print
-}
+  # show each node, with its children
+  #TODO print a real tree...
+class Heap
+  def print
+    0.upto(@values.length-1){|i|
+      to_s = lambda{|x| "#{x}(#{@values[x]})"}
+      puts "#{to_s.call(i)} #{to_s.call(left_child(i))} #{to_s.call(right_child(i))}"
+    }
+  end
+end
+
+ran_from_cli = __FILE__ == $0
+if ran_from_cli
+  h = Heap.new
+  10.times{
+    h.insert_bottom(rand(100))
+    puts h.print
+  }
+end

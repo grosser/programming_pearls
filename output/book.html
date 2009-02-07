@@ -564,22 +564,26 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
 
 <ul>
 <li>build and maintain a sorted heap</li>
+<li>insert from bottom or top</li>
 </ul>
 
 
 <h2>Solutions</h2>
 
-<p>A heap, where each nodes children are lower then their parent.</p>
+<p>A heap, where each nodes children are higher then their parent.</p>
 
-<pre><code>     2
-   3    4
-  5 7 10 12
+<pre><code>      2
+   3     4
+  5 7  10 12
 </code></pre>
 
-<p>When we look at this as array, it would be <code>[2,3,4,5,7,10,12]</code>.
-To insert a new element, we simply append to the array<br/>
-and then let the new element flow up (swap with parent)<br/>
-until it reaches a parent that is lower higher higher than itself.</p>
+<p>Converted to an array, by going from top to bottom and left to right,<br/>
+results in <code>[2,3,4,5,7,10,12]</code>.</p>
+
+<h3>Insertion from bottom</h3>
+
+<p>Append to the array and then let the new element flow up (swap with parent)<br/>
+until it reaches a parent that is higher than itself.</p>
 
 <p><span></span></p>
 
@@ -596,26 +600,15 @@ until it reaches a parent that is lower higher higher than itself.</p>
      while true
        return if position == root
        return if @values[parent(position)] &lt; value
-       swap_with_parent(position)
+       swap(position, parent(position))
        position = parent(position)
      end
    end
 
-   # show each node, with its children
-   #TODO print a real tree...
-   def print
-     0.upto(@values.length-1){|i|
-       to_s = lambda{|x| "#{x}(#{@values[x]})"}
-       puts "#{to_s.call(i)} #{to_s.call(left_child(i))}
-         ⏎#{to_s.call(right_child(i))}"
-     }
-   end
-
  private
 
-   def swap_with_parent(i)
-     @values[parent(i)], @values[i] = @values[i],
-       ⏎@values[parent(i)]
+   def swap(a,b)
+     @values[a], @values[b] = @values[b], @values[a]
    end
 
    def root
@@ -632,6 +625,45 @@ until it reaches a parent that is lower higher higher than itself.</p>
 
    def right_child(i)
      (2*i)+2
+   end
+ end
+</code></pre>
+
+<h3>Insertion from top</h3>
+
+<p>Prepend to the array and then let the new element sink down<br/>
+(swap with smallest child) until it reaches a pair of children that<br/>
+are lower than itself or a position without any children.</p>
+
+<p><span></span></p>
+
+<pre><code> # lib/14-heaps/2.rb
+
+ class Heap
+   def insert_top(value)
+     @values.unshift(value)
+     position = 0
+     while true
+       smallest_child = smallest_child(position)
+       break if not @values[smallest_child] or
+         ⏎@values[smallest_child] &gt;= value
+       swap(position, smallest_child)
+       position = smallest_child
+     end
+   end
+
+ protected
+
+   def smallest_child(position)
+     left,right = left_child(position),
+       ⏎right_child(position)
+     return left unless @values[right]
+     return right unless @values[left]
+     if @values[left] &lt;= @values[right]
+       left
+     else
+       right
+     end
    end
  end
 </code></pre>
