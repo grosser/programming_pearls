@@ -728,6 +728,76 @@ once for <code>text.split</code>, no garbage collection was run)</p>
 
 <h1>Chapter 15 2 duplicate phrases</h1>
 
+<h2>Task</h2>
+
+<p>Find the longest duplicate substring in a text.</p>
+
+<h2>Solutions</h2>
+
+<h3>Simple but slow</h3>
+
+<p>Go through all possible substrings, and see if they are</p>
+
+<ul>
+<li>longer than the current longes duplicate substring</li>
+<li>occure > 2 times in the text</li>
+</ul>
+
+
+<p>Time: O(n²)</p>
+
+<p><span></span></p>
+
+<pre><code> # lib/15-2-duplicate-phrases/1.rb
+
+ longest = ''
+ time = measure do
+   0.upto(text.length) do |start|
+     start.upto(text.length) do |last|
+       substring = text[start..last]
+       longest = substring if substring.length &gt;
+         ⏎longest.length and text.scan(substring).count ==
+         ⏎2
+     end
+   end
+ end
+</code></pre>
+
+<h3>Suffix array</h3>
+
+<ul>
+<li>Build a suffix-array, where each possible suffix is stored<br/>
+abc -> [abc,bc,c]</li>
+<li>Sort this array to to move substrings that start with the same letters nearby</li>
+<li>find the longest commong prefix 2 neighboring suffixes share<br/>
+[a,abc,abd,ac] -> longest duplicate substring is 'ab'</li>
+</ul>
+
+
+<p>Time: O(n)</p>
+
+<p><span></span></p>
+
+<pre><code> # lib/15-2-duplicate-phrases/2.rb
+
+ longest = ''
+ time = measure do
+   #store each suffix
+   suffixes = []
+   0.upto(text.length) do |start|
+     suffixes &lt;&lt; text[start..text.length]
+   end
+
+   #sort them so that equals are next to each other
+   suffixes.sort!
+
+   suffixes.each_with_index do |suffix,i|
+     common = common_prefix(suffix,suffixes[i+1])
+     longest = common if common.length &gt; longest.length
+   end
+ end
+</code></pre>
+
 <p><span></span></p>
 
 <h1>Chapter 15 3 markov</h1>
