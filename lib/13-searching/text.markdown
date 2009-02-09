@@ -44,10 +44,10 @@ Time
 Performance
 -----------
 Inserting x items in 2 seconds:
- 1.  200_000
- 2.  5_000
- 3.  ~1_250
- 4.  20_000
+ 1.  200.000
+ 2.  5.000
+ 3.  ~1.250
+ 4.  20.000
 
 
 Conclusion

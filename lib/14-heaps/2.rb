@@ -27,8 +27,11 @@ protected
 end
 #----excerpt
 
-h = Heap.new
-10.times{
-  h.insert_top(rand(100))
-  puts h.print
-}
+ran_from_cli = __FILE__ == $0
+if ran_from_cli
+  h = Heap.new
+  10.times{
+    h.insert_top(rand(100))
+    puts h.print
+  }
+end

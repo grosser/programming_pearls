@@ -16,6 +16,17 @@ pre {
   padding: 10px;
 }
 
+th, td{
+  padding: 0 5px;
+}
+
+td{
+  text-align:center;
+}
+th{
+  text-align:center;
+}
+
 a {
 	text-decoration: none;
 }

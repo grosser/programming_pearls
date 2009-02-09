@@ -10,29 +10,25 @@
 </head>
 <body>
   <h1>Programming Pearls in Ruby</h1>
-<p><span></span></p>
+<span />
+<h1 id='chapter_02_1_vector_rotation'>Chapter 02 1 vector rotation</h1>
 
-<h1>Chapter 02 1 vector rotation</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <ul>
 <li>rotate a given vector of length n, m places</li>
+
 <li>rotate without extra memory usage (no copies of the vector)</li>
 </ul>
 
+<h2 id='solutions'>Solutions</h2>
 
-<h2>Solutions</h2>
+<p><code>[1,2,3]</code> rotated one place is <code>[2,3,1]</code>.<br />Rotation of more than one step at a time is difficult.</p>
 
-<p><code>[1,2,3]</code> rotated one place is <code>[2,3,1]</code>.<br/>
-Rotation of more than one step at a time is difficult.</p>
-
-<h3>1 * x</h3>
+<h3 id='1__x'>1 * x</h3>
 
 <p>rotate one place, x times</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/02-1-vector-rotation/1.rb
 
  #helper
@@ -46,16 +42,12 @@ Rotation of more than one step at a time is difficult.</p>
      (vector.length-1).times {|i| swap(vector,i,i+1)}
    }
    vector
- end
-</code></pre>
+ end</code></pre>
 
-<h3>re-arrange in a copy</h3>
+<h3 id='rearrange_in_a_copy'>re-arrange in a copy</h3>
 
-<p>Making copies is not allowed, but if it where it would be this simple.
-Make a copy, and re-arrange inside of it.</p>
-
-<p><span></span></p>
-
+<p>Making copies is not allowed, but if it where it would be this simple. Make a copy, and re-arrange inside of it.</p>
+<span />
 <pre><code> # lib/02-1-vector-rotation/2.rb
 
  def rotate(vector,steps)
@@ -63,18 +55,15 @@ Make a copy, and re-arrange inside of it.</p>
    vector.each_index do |i|
      vector[i]=copy[(i+steps) % vector.length]
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h3>juggeling solution</h3>
+<h3 id='juggeling_solution'>juggeling solution</h3>
 
 <p>temp&lt;-1 then 1&lt;-4&lt;-8&lt;-12 then 12&lt;-temp</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/02-1-vector-rotation/3.rb
 
- require 'rational'
+ require &#39;rational&#39;
  def rotate(vector,distance)
    length = vector.length
    distance.gcd(length).times do |start|
@@ -89,71 +78,58 @@ Make a copy, and re-arrange inside of it.</p>
      vector[offset] = temp
    end
    vector
- end
-</code></pre>
+ end</code></pre>
+<span />
+<h1 id='chapter_02_2_anagrams'>Chapter 02 2 anagrams</h1>
 
-<p><span></span></p>
-
-<h1>Chapter 02 2 anagrams</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <ul>
 <li>For a given dictionary, find all anagrams and list them</li>
+
 <li>output in lines: <code>eenprsst = presents, serpents</code></li>
 </ul>
 
+<h2 id='solution'>Solution</h2>
 
-<h2>Solution</h2>
-
-<p>An anagram for 'no' is 'on', meaning same letters - different order.</p>
+<p>An anagram for &#8216;no&#8217; is &#8216;on&#8217;, meaning same letters - different order.</p>
 
 <ul>
 <li>Store each word in a Hash, where the key are the words sorted letters and the values are all words with the same letters</li>
+
 <li>Remove all keys that only have a single anagram</li>
 </ul>
-
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/02-2-anagrams/1.rb
 
  anagrams = Hash.new([])
- input.each {|word| anagrams[word.split('').sort] += [word]}
+ input.each {|word| anagrams[word.split(&#39;&#39;).sort] += [word]}
  anagrams.each do |anagram,words|
    words.uniq!
    next if words.size == 1
-   puts "#{anagram} = #{words*', '}"
- end
-</code></pre>
+   puts &quot;#{anagram} = #{words*&#39;, &#39;}&quot;
+ end</code></pre>
+<span />
+<h1 id='chapter_04_binary_search'>Chapter 04 binary search</h1>
 
-<p><span></span></p>
-
-<h1>Chapter 04 binary search</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <ul>
 <li>for a sorted set <code>[1,2,4,5,6]</code> what index has 4 ?</li>
+
 <li>return nil when it is not contained</li>
 </ul>
 
+<h2 id='solution'>Solution</h2>
 
-<h2>Solution</h2>
+<h3 id='simple'>Simple</h3>
 
-<h3>Simple</h3>
+<pre><code>list.index(value)</code></pre>
 
-<pre><code>list.index(value)
-</code></pre>
+<h3 id='binary_search'>Binary search</h3>
 
-<h3>Binary search</h3>
-
-<p>Grab the middle element, if it is to large, continue left of the middel.
-If it is to small, continue right of the middel.<br/>
-Return nil when no elements are left in the search space.</p>
-
-<p><span></span></p>
-
+<p>Grab the middle element, if it is to large, continue left of the middel. If it is to small, continue right of the middel.<br />Return nil when no elements are left in the search space.</p>
+<span />
 <pre><code> # lib/04-binary-search/1.rb
 
  def binary_find(range,searched)
@@ -172,16 +148,13 @@ Return nil when no elements are left in the search space.</p>
      #search in lower range
      binary_find(range[0...middle],searched)
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h2>Test</h2>
-
-<p><span></span></p>
-
+<h2 id='test'>Test</h2>
+<span />
 <pre><code> # lib/04-binary-search/2.rb
 
- require 'spec'
+ require &#39;spec&#39;
  describe :binary_find do
    {
      []=&gt;1,
@@ -190,35 +163,29 @@ Return nil when no elements are left in the search space.</p>
      [1,3,4]=&gt;3,
      [1,3,4,6,8,9,12,15,17,20]=&gt;17
    }.each do |range,searched|
-     it "find inside #{range.length} element array" do
+     it &quot;find inside #{range.length} element array&quot; do
        binary_find(range,searched).should ==
          ⏎range.index(searched)
      end
-     it "returns nil when nothing could be found inside a
-       ⏎#{range.length} element array" do
+     it &quot;returns nil when nothing could be found inside a
+       ⏎#{range.length} element array&quot; do
        binary_find(range,2).should == nil
      end
    end
- end
-</code></pre>
+ end</code></pre>
+<span />
+<h1 id='chapter_07_algorithm_design'>Chapter 07 algorithm design</h1>
 
-<p><span></span></p>
+<h2 id='task'>Task</h2>
 
-<h1>Chapter 07 algorithm design</h1>
+<p>Find the maximum sum inside a range.<br /><code>[1,2,-4,2,4,-3,1]</code> =&gt; <code>[2,4]</code> =&gt; 6</p>
 
-<h2>Task</h2>
+<h2 id='solutions'>Solutions</h2>
 
-<p>Find the maximum sum inside a range.<br/>
-<code>[1,2,-4,2,4,-3,1]</code> => <code>[2,4]</code> => 6</p>
-
-<h2>Solutions</h2>
-
-<h3>Cubic time O(n³)</h3>
+<h3 id='cubic_time_on'>Cubic time O(n³)</h3>
 
 <p>Find the maximum of every possible sub-range.</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/07-algorithm-design/1-cubic.rb
 
  #runtime O(n³) 2 loops + the sum loop
@@ -230,18 +197,14 @@ Return nil when no elements are left in the search space.</p>
      end
    end
    max
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Quadratic time O(n²)</h3>
+<h3 id='quadratic_time_on'>Quadratic time O(n²)</h3>
 
-<p>Find the maximum of every possible sub-range.<br/>
-Do not calculate the sum for every sub-range, rather just add each new element.</p>
+<p>Find the maximum of every possible sub-range.<br />Do not calculate the sum for every sub-range, rather just add each new element.</p>
 
-<p><code>[1,2,3]</code>: <code>[1]</code> => 1; <code>[1,2]</code> = 1+2 = 3; <code>[1,2,3]</code> = 3+3 = 6</p>
-
-<p><span></span></p>
-
+<p><code>[1,2,3]</code>: <code>[1]</code> =&gt; 1; <code>[1,2]</code> = 1+2 = 3; <code>[1,2,3]</code> = 3+3 = 6</p>
+<span />
 <pre><code> # lib/07-algorithm-design/2-quadratic.rb
 
  def find_max_sum_range(range)
@@ -254,17 +217,12 @@ Do not calculate the sum for every sub-range, rather just add each new element.<
      end
    end
    max
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Less than quadratic time O(n²)</h3>
+<h3 id='less_than_quadratic_time_on'>Less than quadratic time O(n²)</h3>
 
-<p>Find the maximum of every possible sub-range.<br/>
-Build sums, where <code>sums[2] == range[0...2].sum</code>
-and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
-
-<p><span></span></p>
-
+<p>Find the maximum of every possible sub-range.<br />Build sums, where <code>sums[2] == range[0...2].sum</code> and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
+<span />
 <pre><code> # lib/07-algorithm-design/3-quadratic-culmulative.rb
 
  def find_max_sum_range(range)
@@ -281,16 +239,12 @@ and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
      end
    end
    max
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Logarithmic time O(n log n)</h3>
+<h3 id='logarithmic_time_on_log_n'>Logarithmic time O(n log n)</h3>
 
-<p>Divide the problem into 2 smaller, equal problems. (compare: Binary search)
-Maximum of left / right and the maximum of ranges, that cross the middle are comparen.</p>
-
-<p><span></span></p>
-
+<p>Divide the problem into 2 smaller, equal problems. (compare: Binary search) Maximum of left / right and the maximum of ranges, that cross the middle are comparen.</p>
+<span />
 <pre><code> # lib/07-algorithm-design/4-logarithmic.rb
 
  def find_max_sum_range(range)
@@ -319,15 +273,12 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      find_max_sum_range(left),
      find_max_sum_range(right)
    ].max
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Linear time O(n)</h3>
+<h3 id='linear_time_on'>Linear time O(n)</h3>
 
 <p>Compare the sums of all sub-parts. A part ends when its sum drops below 0.</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/07-algorithm-design/5-linear.rb
 
  def find_max_sum_range(range)
@@ -338,40 +289,37 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      max = [partial_max, max].max
    end
    max
- end
-</code></pre>
+ end</code></pre>
+<span />
+<h1 id='chapter_13_searching'>Chapter 13 searching</h1>
 
-<p><span></span></p>
-
-<h1>Chapter 13 searching</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <ul>
 <li>insert randomly generated numbers into a set</li>
+
 <li>insert one-by-one</li>
+
 <li>the set must not contain duplicates after a insertion</li>
+
 <li>return a sorted set, with the requested size, after the last insertion</li>
 </ul>
 
+<h2 id='solutions'>Solutions</h2>
 
-<h2>Solutions</h2>
-
-<h3>1. Hash</h3>
+<h3 id='1_hash'>1. Hash</h3>
 
 <p>Insert unless key exists, sort at the end</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/13-searching/1-hash.rb
 
  class SetHash
    def initialize(maximum_value)
      @maximum = maximum_value
    end
-
+  
    def generate(size)
-     raise "size too big" if size &gt;= @maximum #would runs
+     raise &quot;size too big&quot; if size &gt;= @maximum #would runs
        ⏎endless
      @set = {}
      while @set.size &lt; size
@@ -380,24 +328,21 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      end
      @set.keys.sort
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h3>2. Array</h3>
+<h3 id='2_array'>2. Array</h3>
 
 <p>Insert unless element is included, sort at the end</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/13-searching/2-naive-array.rb
 
  class SetArray
    def initialize(maximum_value)
      @maximum = maximum_value
    end
-
+  
    def generate(size)
-     raise "size too big" if size &gt;= @maximum #would runs
+     raise &quot;size too big&quot; if size &gt;= @maximum #would runs
        ⏎endless
      @set = []
      while @set.size &lt; size
@@ -406,20 +351,12 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      end
      @set.sort
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h3>3. Sorted-Linked-List</h3>
+<h3 id='3_sortedlinkedlist'>3. Sorted-Linked-List</h3>
 
-<p>A linked list of sorted elements, for easy injection.</p>
-
-<pre><code>@head = {:value=&gt;1,:next=&gt;{:value=&gt;3,:next=&gt;nil}}
-</code></pre>
-
-<p>Go thorugh the elements until the insertion position is found.</p>
-
-<p><span></span></p>
-
+<p>A linked list of sorted elements, for easy injection. @head = } Go thorugh the elements until the insertion position is found.</p>
+<span />
 <pre><code> # lib/13-searching/3-linked.rb
 
  class SetLinked
@@ -428,7 +365,7 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
    end
 
    def generate(size)
-     raise "size too big" if size &gt;= @maximum #would runs
+     raise &quot;size too big&quot; if size &gt;= @maximum #would runs
        ⏎endless
      reset
      insert(rand(@maximum)) while @size &lt; size
@@ -464,7 +401,7 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      link[:next] = insert_link(link[:next],number)
      link
    end
-
+  
    def include?(number)
      link = @head
      while link
@@ -474,17 +411,14 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
      end
      return false
    end
- end
-</code></pre>
+ end</code></pre>
 
 <p>Using an array (<code>[2,[3,[5,nil]]]</code>) instead of the more-readable <code>hash[:next]</code>, only saves 1/100th of the time.</p>
 
-<h3>4. Sorted Array</h3>
+<h3 id='4_sorted_array'>4. Sorted Array</h3>
 
 <p>Place elements in a sorted Array, find insertion position using binary-search.</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/13-searching/4-binary-array.rb
 
  class BinaryArray
@@ -493,7 +427,7 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
    end
 
    def generate(size)
-     raise "size too big" if size &gt;= @maximum #would runs
+     raise &quot;size too big&quot; if size &gt;= @maximum #would runs
        ⏎endless
      @set = []
      while @set.size &lt; size
@@ -526,67 +460,72 @@ Maximum of left / right and the maximum of ranges, that cross the middle are com
        binary_find(value,middle+1,right)
      end
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h2>Time</h2>
+<h2 id='time'>Time</h2>
 
 <ol>
 <li>O(n) - lookups always take the same time</li>
+
 <li>O(n²) - the longer the array, the longer the lookup takes</li>
+
 <li>O(n²) - the longer the array, 1/2(mean) the longer the lookup takes</li>
+
 <li>n log n - divide and conquer</li>
 </ol>
 
+<h2 id='performance'>Performance</h2>
 
-<h2>Performance</h2>
+<p>Inserting x items in 2 seconds:</p>
 
-<p>Inserting x items in 2 seconds:
- 1.  200_000
- 2.  5_000
- 3.  ~1_250
- 4.  20_000</p>
+<ol>
+<li>
+<li>000</li>
+</li>
 
-<h2>Conclusion</h2>
+<li>
+<li>000</li>
+</li>
+
+<li>~1.250</li>
+
+<li>
+<li>000</li>
+</li>
+</ol>
+
+<h2 id='conclusion'>Conclusion</h2>
 
 <ul>
 <li>nothing beats linear time</li>
+
 <li>when in doubt choose native objects over self-built (2. vs 3.)</li>
-<li>when self-built has a lower 'time', investigate performance</li>
+
+<li>when self-built has a lower &#8216;time&#8217;, investigate performance</li>
 </ul>
+<span />
+<h1 id='chapter_14_heaps'>Chapter 14 heaps</h1>
 
-
-<p><span></span></p>
-
-<h1>Chapter 14 heaps</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <ul>
 <li>build and maintain a sorted heap</li>
+
 <li>insert from bottom or top</li>
+
+<li>extract the smallest element</li>
+
+<li>build a sort method, to sort any array, using the heap</li>
 </ul>
 
+<h2 id='solutions'>Solutions</h2>
 
-<h2>Solutions</h2>
+<p>A heap, where each nodes children are higher then their parent. 2 3 4 5 7 10 12 Converted to an array, by going from top to bottom and left to right,<br />results in <code>[2,3,4,5,7,10,12]</code>.</p>
 
-<p>A heap, where each nodes children are higher then their parent.</p>
+<h3 id='insertion_from_bottom'>Insertion from bottom</h3>
 
-<pre><code>      2
-   3     4
-  5 7  10 12
-</code></pre>
-
-<p>Converted to an array, by going from top to bottom and left to right,<br/>
-results in <code>[2,3,4,5,7,10,12]</code>.</p>
-
-<h3>Insertion from bottom</h3>
-
-<p>Append to the array and then let the new element flow up (swap with parent)<br/>
-until it reaches a parent that is higher than itself.</p>
-
-<p><span></span></p>
-
+<p>Append to the array and then let the new element flow up (swap with parent)<br />until it reaches a parent that is higher than itself.</p>
+<span />
 <pre><code> # lib/14-heaps/1.rb
 
  class Heap
@@ -622,21 +561,16 @@ until it reaches a parent that is higher than itself.</p>
    def left_child(i)
      (2*i)+1
    end
-
+  
    def right_child(i)
      (2*i)+2
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Insertion from top</h3>
+<h3 id='insertion_from_top'>Insertion from top</h3>
 
-<p>Prepend to the array and then let the new element sink down<br/>
-(swap with smallest child) until it reaches a pair of children that<br/>
-are lower than itself or a position without any children.</p>
-
-<p><span></span></p>
-
+<p>Prepend to the array and then let the new element sink down<br />(swap with smallest child) until it reaches a pair of children that<br />are lower than itself or a position without any children.</p>
+<span />
 <pre><code> # lib/14-heaps/2.rb
 
  class Heap
@@ -665,124 +599,154 @@ are lower than itself or a position without any children.</p>
        right
      end
    end
- end
-</code></pre>
+ end</code></pre>
 
-<p><span></span></p>
+<h3 id='extract_the_smallest_element'>Extract the smallest element</h3>
 
-<h1>Chapter 15 1 count words</h1>
+<p>The heap is sorted, so the top element will always be the smallest.<br />Take it out and insert the last element from top, to restore the order (since we do not know if the second or third element is the smallest)</p>
+<span />
+<pre><code> # lib/14-heaps/3.rb
 
-<h2>Task &amp; Solutions</h2>
+ class Heap
+   def extract_smallest
+     smallest = @values.shift
+     insert_top(@values.pop)
+     smallest
+   end
+ end</code></pre>
 
-<h3>Unique words</h3>
+<h3 id='sort_an_array_using_a_heap'>Sort an Array using a heap</h3>
+
+<p>Fill the heap with the elements of the array and then extract the smallest until the array is empty.</p>
+<span />
+<pre><code> # lib/14-heaps/4.rb
+
+ class Heap
+   def self.sort(array)
+     h = Heap.new
+     array.each {|x|h.insert_top(x)}
+     array.map{h.extract_smallest}
+   end
+ end</code></pre>
+
+<p>Runtime: (n * time to find the minimum) + (n/2 * time for insert) see table below.</p>
+
+<h2 id='comparison_of_runtime_to_other_implementations'>Comparison of runtime to other implementations</h2>
+<table>
+<tr>
+ <td />
+ <th>insert</th>
+ <th>find minimum</th>
+ <th>n of each</th>
+</tr>
+<tr>
+ <th>Sorted Array</th>
+ <td>O(n)</td>
+ <td>O(1)</td>
+ <td>O(n²)</td>
+</tr>
+<tr>
+ <th>Heap</th>
+ <td>O(log n)</td>
+ <td>O(log n)</td>
+ <td>O(n log n)</td>
+</tr>
+<tr>
+ <th>Unsorted Array</th>
+ <td>O(1)</td>
+ <td>O(n)</td>
+ <td>O(n²)</td>
+</tr>
+</table><span />
+<h1 id='chapter_15_1_count_words'>Chapter 15 1 count words</h1>
+
+<h2 id='task__solutions'>Task &amp; Solutions</h2>
+
+<h3 id='unique_words'>Unique words</h3>
 
 <p>Show all words that are inside a given text (unique)!</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-1-count-words/1.rb
 
- puts input.readlines(' ').uniq * "\n"
-</code></pre>
+ puts input.readlines(&#39; &#39;).uniq * &quot;\n&quot;</code></pre>
 
-<h3>Word counting</h3>
+<h3 id='word_counting'>Word counting</h3>
 
 <p>Show all words sorted by number of occurance!</p>
 
 <p>Use a 0-based Hash to mark how often a word has occured.</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-1-count-words/2.rb
 
  occurances = Hash.new(0)
- input.each(' ').each{|word| occurances[word]+=1}
- puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
-   ⏎times '} * "\n"
-</code></pre>
+ input.each(&#39; &#39;).each{|word| occurances[word]+=1}
+ puts occurances.to_a.sort_by{|word,count|count}.map{|x|x*&#39;
+   ⏎times &#39;} * &quot;\n&quot;</code></pre>
 
-<h3>Benchmarking</h3>
+<h3 id='benchmarking'>Benchmarking</h3>
 
 <p>Benchmark occurance counting solution!</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-1-count-words/3-1.rb
 
  occurances = nil
 
  processing = measure do
    occurances = Hash.new(0)
-   input.each(' '){|word| occurances[word]+=1}
+   input.each(&#39; &#39;){|word| occurances[word]+=1}
  end
  printing = measure do
    puts
-     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
-     ⏎times '} * "\n"
- end
-</code></pre>
+     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*&#39;
+     ⏎times &#39;} * &quot;\n&quot;
+ end</code></pre>
 
-<h3>Optimization</h3>
+<h3 id='optimization'>Optimization</h3>
 
 <p>Optimize for performance!</p>
 
 <p>Reading the File once and splitting later.</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-1-count-words/3-2.rb
 
  occurances = nil
  processing = measure do
    occurances = Hash.new(0)
-   input.read.split(' ').each{|word| occurances[word]+=1}
+   input.read.split(&#39; &#39;).each{|word| occurances[word]+=1}
  end
  printing = measure do
    puts
-     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*'
-     ⏎times '} * "\n"
- end
-</code></pre>
+     ⏎occurances.to_a.sort_by{|word,count|count}.map{|x|x*&#39;
+     ⏎times &#39;} * &quot;\n&quot;
+ end</code></pre>
 
-<p>Benchmarking of optimized occurance search<br/>
-shows that it is faster (2.5s vs 3.0s for processing)</p>
+<p>Benchmarking of optimized occurance search<br />shows that it is faster (2.5s vs 3.0s for processing)</p>
 
-<p>Memroy usage: ("puts memory" inside the processing loop)</p>
+<p>Memroy usage: (&#8220;puts memory&#8221; inside the processing loop) normal: mapped: 17652K writeable/private: 2180K shared: 0K optimized: mapped: 109892K writeable/private: 94420K shared: 0K optimized: the text (4.x mb) is in memory twice (once for <code>IO.read</code> and<br />once for <code>text.split</code>, no garbage collection was run)</p>
+<span />
+<h1 id='chapter_15_2_duplicate_phrases'>Chapter 15 2 duplicate phrases</h1>
 
-<pre><code>normal:    mapped: 17652K    writeable/private: 2180K    shared: 0K
-optimized: mapped: 109892K   writeable/private: 94420K   shared: 0K
-</code></pre>
-
-<p>optimized: the text (4.x mb) is in memory twice (once for <code>IO.read</code> and<br/>
-once for <code>text.split</code>, no garbage collection was run)</p>
-
-<p><span></span></p>
-
-<h1>Chapter 15 2 duplicate phrases</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <p>Find the longest duplicate substring in a text.</p>
 
-<h2>Solutions</h2>
+<h2 id='solutions'>Solutions</h2>
 
-<h3>Simple but slow</h3>
+<h3 id='simple_but_slow'>Simple but slow</h3>
 
 <p>Go through all possible substrings, and see if they are</p>
 
 <ul>
 <li>longer than the current longes duplicate substring</li>
-<li>occure > 2 times in the text</li>
+
+<li>occure &gt; 2 times in the text</li>
 </ul>
 
-
 <p>Time: O(n²)</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-2-duplicate-phrases/1.rb
 
- longest = ''
+ longest = &#39;&#39;
  time = measure do
    0.upto(text.length) do |start|
      start.upto(text.length) do |last|
@@ -792,27 +756,23 @@ once for <code>text.split</code>, no garbage collection was run)</p>
          ⏎2
      end
    end
- end
-</code></pre>
+ end</code></pre>
 
-<h3>Suffix array</h3>
+<h3 id='suffix_array'>Suffix array</h3>
 
 <ul>
-<li>Build a suffix-array, where each possible suffix is stored<br/>
-abc -> [abc,bc,c]</li>
+<li>Build a suffix-array, where each possible suffix is stored<br />abc -&gt; <code>[abc,bc,c]</code></li>
+
 <li>Sort this array to to move substrings that start with the same letters nearby</li>
-<li>find the longest commong prefix 2 neighboring suffixes share<br/>
-[a,abc,abd,ac] -> longest duplicate substring is 'ab'</li>
+
+<li>find the longest commong prefix 2 neighboring suffixes share<br /><code>[a,abc,abd,ac]</code> -&gt; longest duplicate substring is &#8216;ab&#8217;</li>
 </ul>
 
-
 <p>Time: O(n)</p>
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-2-duplicate-phrases/2.rb
 
- longest = ''
+ longest = &#39;&#39;
  time = measure do
    #store each suffix
    suffixes = []
@@ -827,51 +787,24 @@ abc -> [abc,bc,c]</li>
      common = common_prefix(suffix,suffixes[i+1])
      longest = common if common.length &gt; longest.length
    end
- end
-</code></pre>
+ end</code></pre>
+<span />
+<h1 id='chapter_15_3_markov'>Chapter 15 3 markov</h1>
 
-<p><span></span></p>
-
-<h1>Chapter 15 3 markov</h1>
-
-<h2>Task</h2>
+<h2 id='task'>Task</h2>
 
 <p>Generate a markov text from given seed data.</p>
 
-<h2>Solution</h2>
+<h2 id='solution'>Solution</h2>
 
-<p>Generating random text by truely random placement of letters would be unnatural.</p>
-
-<pre><code>sovudhbyeonnapdubvne
-</code></pre>
-
-<p>Every letter in the alphabet has a certain probability to occur after another letter.</p>
-
-<pre><code>l -&gt; l=5% e=10% o=10% i=8% ....
-</code></pre>
-
-<p>This yields somewhat natural text</p>
-
-<pre><code>lleno deister
-</code></pre>
-
-<p>If we take more than one letter into account, readability inncreases.</p>
-
-<pre><code># markov-4 (4 letters used when calculating propability)
-"Hell" -&gt; o = 80%, ' '=20%
-</code></pre>
-
-<p>The more letters we take into account, the more natural the generated words sound.<br/>
-What we can do with letters, we can do with whole words!</p>
+<p>Generating random text by truely random placement of letters would be unnatural. sovudhbyeonnapdubvne Every letter in the alphabet has a certain probability to occur after another letter. l -&gt; l=5% e=10% o=10% i=8% &#8230;. This yields somewhat natural text lleno deister If we take more than one letter into account, readability inncreases. # markov-4 (4 letters used when calculating propability) &#8220;Hell&#8221; -&gt; o = 80%, &#8217; &#8216;=20% The more letters we take into account, the more natural the generated words sound.<br />What we can do with letters, we can do with whole words!</p>
 
 <ul>
 <li>calculate the probability word A follows on word B, using seed data</li>
+
 <li>generate random text</li>
 </ul>
-
-
-<p><span></span></p>
-
+<span />
 <pre><code> # lib/15-3-markov/1.rb
 
  #build possible_successors for any used word
@@ -886,7 +819,5 @@ What we can do with letters, we can do with whole words!</p>
    random_text &lt;&lt; possible_successors[random_text.last].rand
  end
 
- puts random_text * ' '
-</code></pre>
-
+ puts random_text * &#39; &#39;</code></pre>
 </body>
