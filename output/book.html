@@ -10,6 +10,31 @@
 </head>
 <body>
   <h1>Programming Pearls in Ruby</h1>
+  <p>
+    This is my rewrite of most of the challenges in the programming-pearls book.
+    Ruby allows for a more readable and simple syntax, saving huge ammouts of code
+    for any given example (sometime 1 to 10 LOC).
+  </p>
+  <p>
+    Some challenges and discussions are not included since they are pointless for ruby,
+    like "how much space needs a hash" or "integers use 8 bit on an 8 bit system and...".
+    Most discussions are very condensed, since this should be a quick read.
+  </p>
+  <p>
+    The original can be found <a href="http://netlib.bell-labs.com/cm/cs/pearls/">here</a>.
+    This version is printer friendly and maybe available as printed copy if i find a cheap way of getting it printed.
+  </p>
+  <p>
+    If you want to contribute, feel free to fork at <a href="http://github.com/grosser/programming_pearls">github</a>.
+  </p>
+  <h3>Copyright</h3>
+  <p>
+    Made available by <a href="http://pragmatig.wordpress.com">Michael Grosser</a>.
+  </p>
+  <p>
+    Read it, print it, spread it, change it, sell it, i do not care...
+  </p>
+
 <span />
 <h1 id='chapter_01_sorting_integers'>Chapter 01 sorting integers</h1>
 
@@ -218,9 +243,7 @@
    end
  end</code></pre>
 <span />
-<h1 id='chapter_05_test_scaffolding'>Chapter 05 test scaffolding</h1>
-<span />
-<h1 id='chapter_07_algorithm_design'>Chapter 07 algorithm design</h1>
+<h1 id='chapter_06_algorithm_design'>Chapter 06 algorithm design</h1>
 
 <h2 id='task'>Task</h2>
 
@@ -232,7 +255,7 @@
 
 <p>Find the maximum of every possible sub-range.</p>
 <span />
-<pre><code> # lib/07-algorithm-design/1-cubic.rb
+<pre><code> # lib/06-algorithm-design/1-cubic.rb
 
  #runtime O(n³) 2 loops + the sum loop
  def find_max_sum_range(range)
@@ -251,7 +274,7 @@
 
 <p><code>[1,2,3]</code>: <code>[1]</code> =&gt; 1; <code>[1,2]</code> = 1+2 = 3; <code>[1,2,3]</code> = 3+3 = 6</p>
 <span />
-<pre><code> # lib/07-algorithm-design/2-quadratic.rb
+<pre><code> # lib/06-algorithm-design/2-quadratic.rb
 
  def find_max_sum_range(range)
    max = 0
@@ -269,7 +292,7 @@
 
 <p>Find the maximum of every possible sub-range.<br />Build sums, where <code>sums[2] == range[0...2].sum</code> and therefore <code>range[1...3] = sums[1]-sums[3]</code></p>
 <span />
-<pre><code> # lib/07-algorithm-design/3-quadratic-culmulative.rb
+<pre><code> # lib/06-algorithm-design/3-quadratic-culmulative.rb
 
  def find_max_sum_range(range)
    sums=[]
@@ -291,7 +314,7 @@
 
 <p>Divide the problem into 2 smaller, equal problems. (compare: Binary search) Maximum of left / right and the maximum of ranges, that cross the middle are comparen.</p>
 <span />
-<pre><code> # lib/07-algorithm-design/4-logarithmic.rb
+<pre><code> # lib/06-algorithm-design/4-logarithmic.rb
 
  def find_max_sum_range(range)
    #trivial
@@ -325,7 +348,7 @@
 
 <p>Compare the sums of all sub-parts. A part ends when its sum drops below 0.</p>
 <span />
-<pre><code> # lib/07-algorithm-design/5-linear.rb
+<pre><code> # lib/06-algorithm-design/5-linear.rb
 
  def find_max_sum_range(range)
    max = partial_max = 0
@@ -352,12 +375,24 @@
 </ul>
 
 <p>Calculation:<br />1 km * 0.005 km * 120 km/day = 0.60 km³/day</p>
-<span />
-<h1 id='chapter_09_code_tuning'>Chapter 09 code tuning</h1>
-<span />
-<h1 id='chapter_11_sorting'>Chapter 11 sorting</h1>
-<span />
-<h1 id='chapter_12_sorted_integers'>Chapter 12 sorted integers</h1>
+
+<p>How long does it take to fill your pool with the gardenhose &#8230; ?</p>
+
+<h2 id='littles_law'>Little&#8217;s Law</h2>
+
+<p>&#8220;The average number of things in the system is the product of the average rate at which things leave the system and the average time each one spends in the system.&#8221;</p>
+
+<p>For example a restaurant has 60 seats and a normal person will eat for 1 hour.<br />When there are 15 people in line before you you will have to wait for ?</p>
+
+<pre><code>Leaving * Time spent = In System
+
+In the system = 60 people
+Time spent = 1 hour
+
+Leaving = 60 people / 1 hour = 1 person / minute
+You wait: 15 minutes!</code></pre>
+
+<p>What is your cities death rate &#8230; ?</p>
 <span />
 <h1 id='chapter_13_searching'>Chapter 13 searching</h1>
 
@@ -888,4 +923,48 @@
  end
 
  puts random_text * &#39; &#39;</code></pre>
+<span />
+<h1 id='chapter_16_random_samples'>Chapter 16 random samples</h1>
+
+<h2 id='tasks_and_solution'>Tasks and Solution</h2>
+
+<h3 id='simple'>Simple</h3>
+
+<p>Select n random, unique samples from a list.</p>
+<span />
+<pre><code> # lib/16-random-samples/1-n-samples.rb
+
+ list = (1..200).to_a
+ samples = []
+ while samples.length != n
+   samples &lt;&lt; rand(list.length)
+   samples.uniq!
+ end
+ samples.map!{|i|list[i]}</code></pre>
+
+<h3 id='more_complex'>More complex</h3>
+
+<p>Select n random, unique samples from a list, with a maximum index of m.</p>
+<span />
+<pre><code> # lib/16-random-samples/2-n-samples.rb
+
+ #Same as before, but the list is limited...
+ list = (1..200).to_a[0..m]</code></pre>
+
+<h3 id='combination'>Combination</h3>
+
+<p>Randomly combine experiments 1,2,3 with stress factors low, medium and high.<br />Example result: 2 high, 1 low, 3 medium</p>
+<span />
+<pre><code> # lib/16-random-samples/3-combinations.rb
+
+ experiments = [1,2,3]
+ stresses = [&#39;low&#39;,&#39;medium&#39;,&#39;high&#39;]
+ result = []
+
+ experiments.count.times {
+   experiment =
+     ⏎experiments.delete_at(rand(experiments.count))
+   stress = stresses.delete_at(rand(stresses.count))
+   result &lt;&lt; &quot;#{experiment} #{stress}&quot;
+ }</code></pre>
 </body>
