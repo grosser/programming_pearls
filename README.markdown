@@ -4,7 +4,7 @@ of ruby (with emphasis on understandable and not 1-line-magic...)
 
 Read it - Print it!
 ========
-Download output/output.zip, unpack, enjoy!
+Download as PDF: output/output.pdf or as HTML: in output/output.zip, enjoy!
 
 Contribute!
 ===========
